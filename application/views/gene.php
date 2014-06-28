@@ -199,9 +199,8 @@
 <script src="<?php echo base_url('script/d3.min.js')?>"></script>
 <script type="text/javascript">
 <!--
-var urlOfGene = '<?php echo base_url('/gene/');?>';
-var urlSeg = '?ninca=<?php echo $ninca?>';
-var urlOfAjax = '<?php echo base_url('/ajax/');?>';
+$(document).ready(function() {
+  /* Table fold/unfold function */
 
   function fold_table(tab) {
     tab.children('tbody').css('display', 'none');
@@ -211,8 +210,6 @@ var urlOfAjax = '<?php echo base_url('/ajax/');?>';
     tab.children('tbody').css('display', 'table-row-group');
     tab.children('thead').children('tr').children('th').children('span').text('Fold <');
   }
-
-$(document).ready(function() {
 
   $("thead").click(function(){
     var span = $(this).children('tr').children('th').children('span');
@@ -227,7 +224,34 @@ $(document).ready(function() {
   fold_table($('#tab_gos'));
   fold_table($('#tab_pathways'));
   fold_table($('#tab_articles'));
+
+  /* Show more function */
+
+  var trs = $('#tab_gos>tbody>tr');
+  if(trs.length > 16){
+    for(var i=16; i<trs.length; ++i){ $(trs[i]).css('display', 'none'); };
+    $('<tr><td class="more" colspan="3"><strong>Show more &gt;</strong></td></tr>').insertAfter('#tab_gos>tbody>tr:nth-child(16)');
+  }
+  trs = $('#tab_pathways>tbody>tr');
+  if(trs.length > 16){
+    for(var i=16; i<trs.length; ++i){ $(trs[i]).css('display', 'none'); };
+    $('<tr><td class="more" colspan="3"><strong>Show more &gt;</strong></td></tr>').insertAfter('#tab_pathways>tbody>tr:nth-child(16)');
+  }
+  trs = $('#tab_articles>tbody>tr');
+  if(trs.length > 16){
+    for(var i=16; i<trs.length; ++i){ $(trs[i]).css('display', 'none'); };
+    $('<tr><td class="more" colspan="2"><strong>Show more &gt;</strong></td></tr>').insertAfter('#tab_articles>tbody>tr:nth-child(16)');
+  }
+
+  $('td.more').css('cursor', 'pointer').click(function() {
+    $(this).parent('tr').parent('tbody').children('tr').css('display', 'table-row');
+    $(this).remove();
+  });
 });
+
+var urlOfGene = '<?php echo base_url('/gene/');?>';
+var urlSeg = '?ninca=<?php echo $ninca?>';
+var urlOfAjax = '<?php echo base_url('/ajax/');?>';
 //-->
 </script>
 <script src="<?php echo base_url('script/genes.js')?>"></script>
