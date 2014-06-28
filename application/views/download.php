@@ -8,9 +8,7 @@
       <li><a href="<?php echo base_url('/downloads/genes_from_hepatitis_to_HCC.tsv'); ?>">from hepatitis to liver cancer</a></li>
       <li><a href="<?php echo base_url('/downloads/genes_from_gastritis_to_GC.tsv'); ?>">from gastritis to gastric cancer</a></li>
     </ol>
-
   </table>
-  <p>To understand what each field means, please refer to browse result.</p>
   <div class="blank20"></div>
 </div>
 <!-- end content -->

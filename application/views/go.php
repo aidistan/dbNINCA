@@ -10,13 +10,13 @@
     table.full { width:880px; }
   </style>
 
-	<table class="full">
-		<tr>
+  <table class="full">
+    <tr>
       <th>Enriched by</th>
       <th>Count</th>
       <th>%</th>
-			<th>Adjusted p-value</th>
-		</tr>
+      <th>Adjusted p-value</th>
+    </tr>
     <tr>
       <td>Conversion-related genes</td>
       <?php if(isset($go['enriched_by'][3])):?>
@@ -41,8 +41,8 @@
         <td>NA</td>
       <?php endif;?>
     </tr>
-		<tr>
-			<td>Cancer-inclined genes</td>
+    <tr>
+      <td>Cancer-inclined genes</td>
       <?php if(isset($go['enriched_by'][2])):?>
         <td><?php echo $go['enriched_by'][2]->count ?></td>
         <td><?php echo $go['enriched_by'][2]->percents ?></td>
@@ -52,30 +52,30 @@
         <td>NA</td>
         <td>NA</td>
       <?php endif;?>
-		</tr>
-		<tr>
-			<th colspan="4">Network balance module</th>
-		</tr>
-	</table>
+    </tr>
+    <tr>
+      <th colspan="4">Network balance module</th>
+    </tr>
+  </table>
 
-	<?php if($gene_in_go):?>
-	<script type="text/javascript">
-	<!--
-		$(document).ready(function(){
-			Genes('<?php echo $gene_in_go['symbol'];?>');
-			$("#more").click(function(){
-				currentMaxPoint += 20;
-				Genes('<?php echo $gene_in_go['symbol'];?>',currentMaxPoint);
-			});
-			$("#less").click(function(){
-				currentMaxPoint -= 20;
-				currentMaxPoint = (currentMaxPoint<20)?20:currentMaxPoint;
-				Genes('<?php echo $gene_in_go['symbol'];?>',currentMaxPoint);
-			});
-		});
-	//-->
-	</script>
-	
+  <?php if($gene_in_go):?>
+  <script type="text/javascript">
+  <!--
+    $(document).ready(function(){
+      Genes('<?php echo $gene_in_go['symbol'];?>');
+      $("#more").click(function(){
+        currentMaxPoint += 20;
+        Genes('<?php echo $gene_in_go['symbol'];?>',currentMaxPoint);
+      });
+      $("#less").click(function(){
+        currentMaxPoint -= 20;
+        currentMaxPoint = (currentMaxPoint<20)?20:currentMaxPoint;
+        Genes('<?php echo $gene_in_go['symbol'];?>',currentMaxPoint);
+      });
+    });
+  //-->
+  </script>
+  
   <div id="svgdiv-content">
     <div id="svgdiv" class="svgdiv"></div>
     <div id="togglebut" style="cursor:pointer;">
@@ -86,16 +86,16 @@
     </div>
   </div>
 
-	<div id="numbar">
-		<span style="margin-left: 20px;">Inflammation genes</span>
-		<span style="margin-left: 70px;">-1</span>
-		<span style="margin-left: 198px;">0</span>
-		<span style="margin-left: 198px;">+1</span>
-		<span style="margin-left: 105px;">Cancer genes</span>
-	</div>
-	<?php endif;?>
+  <div id="numbar">
+    <span style="margin-left: 20px;">Inflammation genes</span>
+    <span style="margin-left: 70px;">-1</span>
+    <span style="margin-left: 198px;">0</span>
+    <span style="margin-left: 198px;">+1</span>
+    <span style="margin-left: 105px;">Cancer genes</span>
+  </div>
+  <?php endif;?>
 <?php else:?>
-	<h2>not found</h2>
+  <h2>not found</h2>
 <?php endif;?>
 </div>
 <!-- end content -->
