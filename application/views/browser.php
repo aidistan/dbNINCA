@@ -44,7 +44,7 @@
 
 		<p style="padding-top: 15px">
 			<span>&nbsp;</span>
-			<input class="submit" type="submit" value="Go!"/>
+			<input class="submit" type="submit" value="Go"/>
 		</p>
 	</form>
 

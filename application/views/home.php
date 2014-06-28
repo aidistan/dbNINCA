@@ -45,8 +45,11 @@
   <div style="width: 620px;">
     <div class="titl">What is dbNINCA?</div>
     <div class="titl_br"></div>
+    <style type="text/css">
+      strong.letter { color:#f00;text-decoration:underline; }
+    </style>
     <div class="titl_con">
-      <p>The dbNINCA is the first database to construct molecular networks underlying the process from inflammation to cancer.</p>
+      <p>The dbNINCA is the first database to construct molecular <strong class="letter">n</strong>etworks underlying the process from <strong class="letter">in</strong>flammation to <strong class="letter">ca</strong>ncer.</p>
       <p>Inflammation-to-cancer is a highly complex and dynamic process, and lacks of clinical data. By proposing a novel model of network balance, this database is able to capture molecular links from inflammation to cancer. To measure the role each gene plays in the process from inflammation to cancer, the database established an effectively computational framework, which integrated microarray data analysis, network analysis, disease gene inference, and literature mining.</p>
       <p>By now, the database can be searched by not only gene, but also GO or pathway. Three typical types of inflammation-induced cancer in the digestive system are included: from gastritis to gastric cancer, from hepatitis to liver cancer, and from inflammatory bowel disease to colorectal cancer.</p>
       <img src="images/model.png" style="width:100%;">
