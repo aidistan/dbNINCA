@@ -1,0 +1,137 @@
+/* SVG elements */
+
+div#svgdiv svg {
+    
+    cursor: move;
+}
+
+line.link {
+    stroke: #CCCCFF;
+}
+
+circle {
+    cursor: crosshair;
+    fill: #EBC763;
+    stroke: #9966CC;
+    stroke-width: 7px;
+}
+
+circle.level1 {
+    stroke: #f00;
+}
+
+circle.level2 {
+    fill-opacity: 0.8;
+    stroke-opacity: 0.8;
+    stroke: #777;
+}
+
+circle.level3 {
+    fill-opacity: 0.5;
+    stroke-opacity: 0.5;
+}
+
+circle.sibling {
+    /*fill: blue;*/
+    fill: #455EE8;
+}
+
+circle.main {
+    /*fill: red;*/
+    fill: #732A9A;
+    fill-opacity: 1.0;
+}
+
+/* ....................................................................... */
+/* Graph labels */
+
+g.gLabel {
+    font: 14px Helvetica,arial,freesans,clean,sans-serif;
+    font-weight: normal;
+    /* visibility: hidden; */
+}
+
+g.on {
+    visibility: visible;    
+}
+
+g.zoomed {
+    font: Helvetica,arial,freesans,clean,sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    text-align: center;
+    color: #000;
+    border: none;
+    z-index: 0;
+}
+
+text {
+    font: 14px Helvetica,arial,freesans,clean,sans-serif;
+    font-weight: normal;
+    stroke-opacity: 1.0;
+}
+
+text.nlabel {
+    /*stroke: #000000;*/
+}
+
+text.nshadow {
+    stroke: #fff;
+    stroke-width: 3px;
+}
+
+text.main {
+    font: 14px sans-serif;
+    font-weight: bold;
+}
+
+
+/* ....................................................................... */
+
+/* no longer used */
+
+.nlabel_on {
+    visibility: visible;
+    font-size: 16px;
+    opacity: 1.0;
+    fill: #101000;
+    stroke: #ffffff;
+    font-weight: bold;
+}
+
+.tooltip{
+    position: absolute;
+    width: 200px;
+    height: 50px;
+    padding: 8px;
+    font: 14px Helvetica,arial,freesans,clean,sans-serif;
+    background: #FFF;
+    border: solid 1px #aaa;
+    border-radius: 8px;
+    pointer-events: none;
+    z-index:1000;
+    text-align:center;
+    background: rgba(222,223,163,0.8);
+}
+
+
+/* ------------------------------------ */
+#svgdiv-content{position:relative;width: 880px;height:600px;margin: 0 auto;}
+.svgdiv{ text-align: center;width: 880px;height:600px;}
+#togglebut{width: 100px;position:absolute; right:2px; bottom:2px;}
+#numbar{width:880px; background:url(../images/880.jpg) no-repeat; margin: 0 auto;padding: 10px 0;}
+.arc path { stroke: #fff; }
+
+#progress {
+	height: 12px;
+	border: 1px solid #3B3B3B;
+	width: 100px;
+	overflow: hidden;
+}
+
+#bar_span {
+	display: block;
+	width: 0%;
+	height: 12px;
+	background: green;
+}
