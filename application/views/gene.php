@@ -50,11 +50,32 @@
       </tr>
       <tr>
         <td colspan="2">Conversion score</td>
-        <td><?php echo $gene['c_score'];?></td>
+        <td>
+          <svg width="200px" height="12px" style="display:inline;margin-right:10px;">
+            <g>
+              <rect width="100%" height="100%" y="0" x="0" style="fill:#decaed"></rect>
+              <rect width="<?php echo 100*($nincas['cr_gene_num']-$gene['c_score_rank']+1)/$nincas['cr_gene_num'] ?>%" height="100%" y="0" x="0" style="fill:#9962c1"></rect>
+            </g>
+          </svg>
+          <?php echo sprintf("%.4f", $gene['c_score']);?>
+        </td>
       </tr>
       <tr>
         <td colspan="2">Balance score</td>
-        <td><?php echo $gene['b_score'];?></td>
+        <td>
+          <svg width="200px" height="12px" style="display:inline;margin-right:10px;">
+            <g>
+              <rect width="50%" height="100%" y="0" x="0" style="fill:#d0f0fc"></rect>
+              <rect width="50%" height="100%" y="0" x="100" style="fill:#fdd6dd"></rect>
+  <?php if($gene['b_score']<0):?>
+              <rect width="<?php echo -50 * $gene['b_score'];?>%" height="100%" y="0" x="<?php echo 100*(1+$gene['b_score']);?>" style="fill:#00aeef"></rect>
+  <?php else:?>
+              <rect width="<?php echo 50 * $gene['b_score'];?>%" height="100%" y="0" x="100" style="fill:#f42145"></rect>
+  <?php endif;?>
+            </g>
+          </svg>
+          <?php echo sprintf("%.4f", $gene['b_score']);?>
+        </td>
       </tr>
       <tr>
         <td><a href="http://omim.org/entry/<?php echo $nincas['in_omim_id'];?>">Inflammation</a></td>
