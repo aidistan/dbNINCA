@@ -17,7 +17,7 @@
   </style>
 
   <h4 style="font-size:200%"><?php echo $gene['symbol'];?></h4>
-  <h5 style="font-size:140%">in the process <?php echo $nincas['name'];?></h5>
+  <h5 style="font-size:140%">In the process <?php echo strtolower($nincas['name']);?></h5>
 
   <table class="icons">
     <tr style="height:64px;">
