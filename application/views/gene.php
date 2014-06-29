@@ -65,8 +65,7 @@
         <td>
           <svg width="200px" height="12px" style="display:inline;margin-right:10px;">
             <g>
-              <rect width="50%" height="100%" y="0" x="0" style="fill:#d0f0fc"></rect>
-              <rect width="50%" height="100%" y="0" x="100" style="fill:#fdd6dd"></rect>
+              <rect width="100%" height="100%" y="0" x="0" style="fill:#decaed"></rect>
   <?php if($gene['b_score']<0):?>
               <rect width="<?php echo -50 * $gene['b_score'];?>%" height="100%" y="0" x="<?php echo 100*(1+$gene['b_score']);?>" style="fill:#00aeef"></rect>
   <?php else:?>
@@ -97,6 +96,21 @@
       </tr>
     </tbody>
   </table>
+
+  <?php if($expressions):?>
+  <table id="tab_exp" class="full">
+     <thead>
+      <tr>
+        <th colspan="3">Expressions<span></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>
+
+      </td></tr>
+    </tbody>
+  </table>
+  <?php endif;?>
 
   <?php if($gos):?>
   <table id="tab_gos" class="full">
