@@ -44,8 +44,10 @@
 
   <table class="icons">
     <tr style="height:64px;">
-      <td><img src="<?php echo base_url('/images/g1.png');?>" width="48px"></td>
+  <?php if($expressions):?>
+      <td><a href="#tab_exp" onclick="unfold_table($('#tab_exp'));"><img src="<?php echo base_url('/images/g1.png');?>" width="48px"></a></td>
       <td style="width:3px;padding:0;background:none;"></td>
+  <?php endif;?>
   <?php if($articles):?>
       <td><a href="#tab_articles" onclick="unfold_table($('#tab_articles'));"><img src="<?php echo base_url('/images/g2.png');?>" width="48px"></a></td>
       <td style="width:3px;padding:0;background:none;"></td>
@@ -257,18 +259,16 @@
 <script src="<?php echo base_url('script/d3.min.js')?>"></script>
 <script type="text/javascript">
 <!--
+function fold_table(tab) {
+  tab.children('tbody').css('display', 'none');
+  tab.children('thead').children('tr').children('th').children('span').text('Unfold >');
+};
+ function unfold_table(tab) {
+  tab.children('tbody').css('display', 'table-row-group');
+  tab.children('thead').children('tr').children('th').children('span').text('Fold <');
+}
+
 $(document).ready(function() {
-  /* Table fold/unfold function */
-
-  function fold_table(tab) {
-    tab.children('tbody').css('display', 'none');
-    tab.children('thead').children('tr').children('th').children('span').text('Unfold >');
-  };
-   function unfold_table(tab) {
-    tab.children('tbody').css('display', 'table-row-group');
-    tab.children('thead').children('tr').children('th').children('span').text('Fold <');
-  }
-
   $("thead").click(function(){
     var span = $(this).children('tr').children('th').children('span');
     if(span.text() == 'Unfold >'){
