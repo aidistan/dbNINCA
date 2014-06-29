@@ -308,6 +308,7 @@ $(document).ready(function() {
   });
 });
 
+<?php if($gene&&$expressions):?>
 // Gene expression
 var ge_margin = {top: 20, right: 20, bottom: 30, left: 50},
     ge_width = 872 - ge_margin.left - ge_margin.right,
@@ -371,6 +372,8 @@ ge_svg.selectAll(".bar")
     .attr("width", ge_x.rangeBand()/4)
     .attr("y", function(d) { return ge_y(d.ex); })
     .attr("height", function(d) { return ge_height - ge_y(d.ex); });
+
+<?php endif;?>
 
 // For network model
 var urlOfGene = '<?php echo base_url('/gene/');?>';
