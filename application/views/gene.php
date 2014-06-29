@@ -14,6 +14,22 @@
 
     table#tab_basic tr > td { font-weight:bold;  }
     table#tab_basic tr > td:last-child { font-weight:normal; width:70%;}
+
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis path { display: none; }
+    .y.axis g.tick { display:none; }
+
+    .line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 1.5px;
+    }
   </style>
 
   <h4 style="font-size:200%"><?php echo $gene['symbol'];?></h4>
@@ -105,7 +121,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td>
+      <tr><td id="ge_holder">
 
       </td></tr>
     </tbody>
@@ -256,6 +272,7 @@ $(document).ready(function() {
   });
 
   unfold_table($('#tab_basic'));
+  fold_table($('#tab_exp'));
   fold_table($('#tab_gos'));
   fold_table($('#tab_pathways'));
   fold_table($('#tab_articles'));
@@ -284,6 +301,70 @@ $(document).ready(function() {
   });
 });
 
+// Gene expression
+var ge_margin = {top: 20, right: 20, bottom: 30, left: 50},
+    ge_width = 872 - ge_margin.left - ge_margin.right,
+    ge_height = 200 - ge_margin.top - ge_margin.bottom;
+
+var ge_x = d3.scale.ordinal()
+    .rangeBands([0, ge_width]);
+
+var ge_y = d3.scale.linear()
+    .range([ge_height, 0]);
+
+var ge_xAxis = d3.svg.axis()
+    .scale(ge_x)
+    .orient("bottom");
+
+var ge_yAxis = d3.svg.axis()
+    .scale(ge_y)
+    .orient("left");
+
+var ge_line = d3.svg.line()
+    .x(function(d) { return ge_x(d.ph); })
+    .y(function(d) { return ge_y(d.ex); });
+
+var ge_svg = d3.select("#ge_holder").insert("svg")
+    .attr("width", ge_width + ge_margin.left + ge_margin.right)
+    .attr("height", ge_height + ge_margin.top + ge_margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + ge_margin.left + "," + ge_margin.top + ")");
+
+var ge_data = [
+<?php
+  $ge_data = array();
+  for($i=0;$i<count($phases);++$i){
+    array_push($ge_data, '{ph:"'.$phases[$i].'", ex:'.$expressions[$i].'}');
+  }
+  echo(join(', ', $ge_data));
+?>
+];
+
+ge_x.domain([<?php echo('"'.join('", "', $phases).'"'); ?>]);
+ge_y.domain(d3.extent(ge_data, function(d) { return d.ex; }));
+
+ge_svg.append("g")
+    .attr("class", "x axis")
+    .attr("transform", "translate(0," + ge_height + ")")
+    .call(ge_xAxis);
+
+ge_svg.append("g")
+    .attr("class", "y axis")
+    .call(ge_yAxis)
+  .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", ".71em")
+    .style("text-anchor", "end")
+    .text("Gene expression");
+
+ge_svg.append("path")
+    .datum(ge_data)
+    .attr("class", "line")
+    .attr("d", ge_line)
+    .attr("transform", "translate("+ge_width/<?php echo 2*count($phases) ?>+", 0)");
+
+// For network model
 var urlOfGene = '<?php echo base_url('/gene/');?>';
 var urlSeg = '?ninca=<?php echo $ninca?>';
 var urlOfAjax = '<?php echo base_url('/ajax/');?>';
