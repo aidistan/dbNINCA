@@ -15,6 +15,18 @@
     table#tab_basic tr > td { font-weight:bold;  }
     table#tab_basic tr > td:last-child { font-weight:normal; width:70%;}
 
+    .bar {
+      fill: steelblue;
+    }
+
+    .bar:hover {
+      fill: brown;
+    }
+
+    .axis {
+      font: 10px sans-serif;
+    }
+
     .axis path,
     .axis line {
       fill: none;
@@ -22,13 +34,8 @@
       shape-rendering: crispEdges;
     }
 
-    .x.axis path { display: none; }
-    .y.axis g.tick { display:none; }
-
-    .line {
-      fill: none;
-      stroke: steelblue;
-      stroke-width: 1.5px;
+    .x.axis path {
+      display: none;
     }
   </style>
 
@@ -318,11 +325,8 @@ var ge_xAxis = d3.svg.axis()
 
 var ge_yAxis = d3.svg.axis()
     .scale(ge_y)
-    .orient("left");
-
-var ge_line = d3.svg.line()
-    .x(function(d) { return ge_x(d.ph); })
-    .y(function(d) { return ge_y(d.ex); });
+    .orient("left")
+    .ticks(5);
 
 var ge_svg = d3.select("#ge_holder").insert("svg")
     .attr("width", ge_width + ge_margin.left + ge_margin.right)
@@ -341,7 +345,8 @@ var ge_data = [
 ];
 
 ge_x.domain([<?php echo('"'.join('", "', $phases).'"'); ?>]);
-ge_y.domain(d3.extent(ge_data, function(d) { return d.ex; }));
+ge_y.domain([d3.min(ge_data, function(d) { return d.ex; }), 
+             d3.max(ge_data, function(d) { return d.ex; })]);
 
 ge_svg.append("g")
     .attr("class", "x axis")
@@ -356,13 +361,16 @@ ge_svg.append("g")
     .attr("y", 6)
     .attr("dy", ".71em")
     .style("text-anchor", "end")
-    .text("Gene expression");
+    .text("log scale");
 
-ge_svg.append("path")
-    .datum(ge_data)
-    .attr("class", "line")
-    .attr("d", ge_line)
-    .attr("transform", "translate("+ge_width/<?php echo 2*count($phases) ?>+", 0)");
+ge_svg.selectAll(".bar")
+    .data(ge_data)
+  .enter().append("rect")
+    .attr("class", "bar")
+    .attr("x", function(d) { return ge_x(d.ph)+ge_x.rangeBand()*3/8; })
+    .attr("width", ge_x.rangeBand()/4)
+    .attr("y", function(d) { return ge_y(d.ex); })
+    .attr("height", function(d) { return ge_height - ge_y(d.ex); });
 
 // For network model
 var urlOfGene = '<?php echo base_url('/gene/');?>';
