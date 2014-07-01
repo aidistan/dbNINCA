@@ -49,7 +49,6 @@ class Home extends CI_Controller {
     $this->load->view('includes/sider');
 
     $data = array();
-    // Content
     $data['options_species'] = $this->options_species;
     $data['options_tissue'] = $this->options_tissue;
     $data['options_type'] = $this->config->item('options_type');
@@ -199,7 +198,7 @@ class Home extends CI_Controller {
     $symbol = $this->uri->rsegment(3);
     $ninca = $this->input->get('ninca', TRUE);
     $nincas = $this->db->from('nincas')->where('ninca_id', $ninca)->get()->row_array();
-    if(!($symbol&&$ninca&&$nincas)){
+    if(!($symbol&&$ninca&&$nincas)){ // No symbol or no ninca or ninca does not exist
       redirect(site_url());
       return;
     }
@@ -209,25 +208,27 @@ class Home extends CI_Controller {
     $data['nincas'] = $nincas;
 
     // Fetch gene
-    $data['gene'] = array();
     $this->db->where('symbol' ,$symbol);
     $this->db->from('genes');
     $this->db->limit(1);
-    $gene = $this->db->get()->row_array();
+    $data['gene'] = $this->db->get()->row_array();
 
-    if($gene){
+    if($data['gene']){
       $this->db->where('ninca_id' ,$ninca);
       $this->db->where('symbol' ,$symbol);
       $this->db->from('genes_in_ninca');
       $this->db->limit(1);
-      $gene_in_ninca = $this->db->get()->row_array();
+      $data['gene_in_ninca'] = $this->db->get()->row_array();
 
-      if($gene_in_ninca){
-        $data['gene'] = array_merge($gene_in_ninca, $gene);
+      $data['expressions'] = array();
+      $data['gos'] = array();
+      $data['pathways'] = array();
+      $data['articles'] = array();
+        
+      if($data['gene_in_ninca']){
         // Gene finished
 
         // Fetch expression
-        $data['expressions'] = array();
         $this->db->where('ninca_id', $ninca)->where('symbol' ,$symbol);
         $this->db->order_by('phase_id', 'asc');
         $this->db->from('expressions_in_ninca');
@@ -245,7 +246,6 @@ class Home extends CI_Controller {
         }
 
         // Fetch GOs
-        $data['gos'] = array();
         $options_enriched_by = $this->config->item('options_enriched_by');
         $this->db->where('ninca_id' ,$ninca);
         $this->db->where('symbol' ,$symbol);
@@ -282,7 +282,6 @@ class Home extends CI_Controller {
         // GOs finished
 
         // Fetch Pathways
-        $data['pathways'] = array();
         $options_enriched_by = $this->config->item('options_enriched_by');
         $this->db->where('ninca_id' ,$ninca);
         $this->db->where('symbol' ,$symbol);
@@ -319,7 +318,6 @@ class Home extends CI_Controller {
         // Pathways finished
 
         // Fetch articles
-        $data['articles'] = array();
         $this->db->where('ninca_id' ,$ninca);
         $this->db->where('symbol' ,$symbol);
         $this->db->where('type' ,'ic');

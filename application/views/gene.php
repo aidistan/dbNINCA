@@ -79,10 +79,10 @@
           <svg width="200px" height="12px" style="display:inline;margin-right:10px;">
             <g>
               <rect width="100%" height="100%" y="0" x="0" style="fill:#decaed"></rect>
-              <rect width="<?php echo 100*($nincas['cr_gene_num']-$gene['c_score_rank']+1)/$nincas['cr_gene_num'] ?>%" height="100%" y="0" x="0" style="fill:#9962c1"></rect>
+              <rect width="<?php echo 100*($nincas['cr_gene_num']-(isset($gene_in_ninca['c_score_rank']) ? $gene_in_ninca['c_score_rank'] : $nincas['cr_gene_num']+1)+1)/$nincas['cr_gene_num'] ?>%" height="100%" y="0" x="0" style="fill:#9962c1"></rect>
             </g>
           </svg>
-          <?php echo sprintf("%.4f", $gene['c_score']);?>
+          <?php echo isset($gene_in_ninca['c_score']) ? sprintf("%.4f", $gene_in_ninca['c_score']) : 'not available';?>
         </td>
       </tr>
       <tr>
@@ -91,33 +91,35 @@
           <svg width="200px" height="12px" style="display:inline;margin-right:10px;">
             <g>
               <rect width="100%" height="100%" y="0" x="0" style="fill:#decaed"></rect>
-  <?php if($gene['b_score']<0):?>
-              <rect width="<?php echo -50 * $gene['b_score'];?>%" height="100%" y="0" x="<?php echo 100*(1+$gene['b_score']);?>" style="fill:#00aeef"></rect>
-  <?php else:?>
-              <rect width="<?php echo 50 * $gene['b_score'];?>%" height="100%" y="0" x="100" style="fill:#f42145"></rect>
+  <?php if(isset($gene_in_ninca['b_score'])):?>
+    <?php if($gene_in_ninca['b_score']<0):?>
+              <rect width="<?php echo -50 * $gene_in_ninca['b_score'];?>%" height="100%" y="0" x="<?php echo 100*(1+$gene_in_ninca['b_score']);?>" style="fill:#00aeef"></rect>
+    <?php else:?>
+              <rect width="<?php echo 50 * $gene_in_ninca['b_score'];?>%" height="100%" y="0" x="100" style="fill:#f42145"></rect>
+    <?php endif;?>
   <?php endif;?>
             </g>
           </svg>
-          <?php echo sprintf("%.4f", $gene['b_score']);?>
+          <?php echo isset($gene_in_ninca['b_score']) ? sprintf("%.4f", $gene_in_ninca['b_score']) : 'not available';?>
         </td>
       </tr>
       <tr>
         <td><a href="http://omim.org/entry/<?php echo $nincas['in_omim_id'];?>">Inflammation</a></td>
         <td rowspan="2">gene in OMIM</td>
-        <td><?php echo $gene['omim_in_gene'] ? 'Yes' : 'No';?></td>
+        <td><?php echo isset($gene_in_ninca['omim_in_gene'])&&$gene_in_ninca['omim_in_gene'] ? 'Yes' : 'No';?></td>
       </tr>
       <tr>
         <td><a href="http://omim.org/entry/<?php echo $nincas['ca_omim_id'];?>">Cancer</a></td>
-        <td><?php echo $gene['omim_ca_gene'] ? 'Yes' : 'No';?></td>
+        <td><?php echo isset($gene_in_ninca['omim_ca_gene'])&&$gene_in_ninca['omim_ca_gene'] ? 'Yes' : 'No';?></td>
       </tr>
       <tr>
         <td rowspan="2">CIPHER rank in</td>
         <td>inflammation</td>
-        <td><?php echo $gene['cipher_in_rank'] ? $gene['cipher_in_rank'] : 'not available';?></td>
+        <td><?php echo isset($gene_in_ninca['cipher_in_rank'])&&$gene_in_ninca['cipher_in_rank'] ? $gene_in_ninca['cipher_in_rank'] : 'not available';?></td>
       </tr>
       <tr>
         <td>cancer</td>
-        <td><?php echo $gene['cipher_ca_rank'] ? $gene['cipher_ca_rank'] : 'not available';?></td>
+        <td><?php echo isset($gene_in_ninca['cipher_ca_rank'])&&$gene_in_ninca['cipher_ca_rank'] ? $gene_in_ninca['cipher_ca_rank'] : 'not available';?></td>
       </tr>
     </tbody>
   </table>
@@ -308,7 +310,7 @@ $(document).ready(function() {
   });
 });
 
-<?php if($gene&&$expressions):?>
+<?php if($gene_in_ninca&&$expressions):?>
 // Gene expression
 var ge_margin = {top: 20, right: 20, bottom: 30, left: 50},
     ge_width = 872 - ge_margin.left - ge_margin.right,
