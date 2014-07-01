@@ -46,6 +46,7 @@ $route['pathway'] = "home/pathway";
 $route['pathway/(:any)'] = "home/pathway/$1";
 $route['ajax'] = "home/ajax";
 $route['ajax/(:any)'] = "home/ajax/$1";
+$route['tool'] = "home/tool";
 
 $route['statistics'] = "home/statistics";
 $route['download'] = "home/download";
